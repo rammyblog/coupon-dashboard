@@ -7,7 +7,7 @@ const initialSignupState = {
   errResponse: "",
 };
 
-export function authReducer(state = initialSignupState, action) {
+export default function authReducer(state = initialSignupState, action) {
   switch (action.type) {
     case types.AUTH_START:
       return {
