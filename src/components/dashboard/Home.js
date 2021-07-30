@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DashboardHOC from "./DashboardHoc";
-import { Card, Col, Row, Spin, Typography } from "antd";
+import { Card, Col, Row, Typography } from "antd";
 import { Doughnut, Line } from "react-chartjs-2";
 const { Title } = Typography;
 
@@ -117,7 +117,16 @@ const Home = () => {
       <div className="site-card-wrapper">
         <Row gutter={16}>
           {CardObj.map((item, index) => (
-            <Col xs={24} sm={24} md={8} lg={8} xl={8} key={index} span={8} className='mb-4'>
+            <Col
+              xs={24}
+              sm={24}
+              md={8}
+              lg={8}
+              xl={8}
+              key={index}
+              span={8}
+              className="mb-4"
+            >
               <Card title={item.title} bordered={true}>
                 {item.content}
               </Card>
