@@ -1,9 +1,15 @@
-.ant-menu, .ant-layout-sider-children {
+.ant-menu,
+.ant-layout-sider-children,
+.ant-layout-sider {
   background: #4e73df !important;
 }
 
-
 .ant-layout-header {
-    box-shadow: rgba(58, 59, 69, 0.15) 0px 0.15rem 1.75rem 0px !important;
-    background: #fff !important;
+  box-shadow: rgba(58, 59, 69, 0.15) 0px 0.15rem 1.75rem 0px !important;
+  background: #fff !important;
 }
+
+
+.ant-layout-sider {
+    min-height: 100vh !important;
+  }

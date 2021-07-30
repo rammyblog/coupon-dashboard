@@ -8,7 +8,7 @@ const BaseRouter = () => (
   <Switch>
     <Route exact path="/login" component={Login} />
     {/* <PrivateRoute exact path="/profile/" component={Profile} /> */}
-    <PrivateRoute exact path="/" component={SiderLayout} />
+    <PrivateRoute exact path="/" component={Home} />
   </Switch>
 );
 

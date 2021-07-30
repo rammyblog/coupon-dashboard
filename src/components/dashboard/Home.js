@@ -1,11 +1,8 @@
-import React from 'react'
+import React from "react";
+import DashboardHOC from "./DashboardHoc";
 
 const Home = () => {
-    return (
-        <div>
-            Procted by React Router
-        </div>
-    )
-}
+  return <div>Proceed by React Router</div>;
+};
 
-export default Home
+export default DashboardHOC(Home, "1");
