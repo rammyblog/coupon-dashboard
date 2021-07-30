@@ -2,7 +2,6 @@ import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import Login from "./components/auth/Login";
 import Home from "./components/dashboard/Home";
-import SiderLayout from "./components/dashboard/SiderLayout";
 
 const BaseRouter = () => (
   <Switch>
