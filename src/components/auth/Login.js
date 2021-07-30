@@ -20,8 +20,9 @@ const Login = () => {
   }, [history]);
 
   useEffect(() => {
-    if (token) {
+    if (token && checkAuth()) {
       // dispatch(getUserAction());
+
       history.push("/");
     }
   }, [token, history, dispatch]);
