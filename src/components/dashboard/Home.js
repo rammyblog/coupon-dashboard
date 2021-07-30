@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useCallback } from "react";
 import DashboardHOC from "./DashboardHoc";
 import { Card, Col, Row, Typography } from "antd";
 import { Doughnut, Line } from "react-chartjs-2";
@@ -53,7 +53,8 @@ const Home = () => {
     ],
   };
 
-  const getCouponData = () => {
+  
+  const getCouponData = useCallback(() =>  {
     // const activeUsers = users
     //   ? users.filter((user) => user.isActive === true).length
     //   : 0;
@@ -76,9 +77,10 @@ const Home = () => {
     setdoughnutStateData(DoughnutData);
 
     return;
-  };
+    // eslint-disable-next-line
+  },[])
 
-  const arrangeCouponStats = () => {
+  const arrangeCouponStats = useCallback(() => {
     if (couponsByMonth) {
       for (let index = 0; index < couponsByMonth.length; index++) {
         const data = couponsByMonth[index];
@@ -87,15 +89,17 @@ const Home = () => {
       }
       setLineData(lineStatsData);
     }
-  };
+// eslint-disable-next-line
+  }, [])
 
   // useEffect(() => {
   //   setuserObj(getUsersData());
   // }, [users]);
 
   useEffect(() => {
+    getCouponData();
     arrangeCouponStats();
-  }, []);
+  }, [getCouponData, arrangeCouponStats]);
 
   const CardObj = [
     {
