@@ -14,3 +14,6 @@ body {
 .text-white {
   color: #fff;
 }
+a {
+  text-decoration: none !important;
+}

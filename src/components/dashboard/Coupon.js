@@ -1,6 +1,7 @@
 import React from "react";
 import DashboardHOC from "./DashboardHoc";
 import { Table, Button } from "antd";
+import { Link } from "react-router-dom";
 
 const Coupon = () => {
   const columns = [
@@ -93,7 +94,9 @@ const Coupon = () => {
 
   return (
     <div>
-      <Button>Create Coupon</Button>
+      <Button type="link">
+        <Link to="/coupon/create">Create Coupon</Link>
+      </Button>
       <Table columns={columns} dataSource={data} onChange={onChange} />
     </div>
   );
