@@ -17,3 +17,12 @@ body {
 a {
   text-decoration: none !important;
 }
+
+
+.float-right{
+  float: right
+}
+
+.clear-both{
+  clear:both
+}

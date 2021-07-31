@@ -37,6 +37,7 @@ const Coupon = () => {
       onFilter: (value, record) => record.name.indexOf(value) === 0,
       sorter: (a, b) => a.name.length - b.name.length,
       sortDirections: ["descend"],
+      render: text => <Link to='/coupon/1'>{text}</Link>
     },
     {
       title: "Age",

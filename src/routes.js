@@ -4,6 +4,7 @@ import Login from "./components/auth/Login";
 import Home from "./components/dashboard/Home";
 import Coupon from "./components/dashboard/Coupon";
 import CouponForm from "./components/dashboard/CouponForm";
+import SingleCoupon from "./components/dashboard/SingleCoupon";
 
 const BaseRouter = () => (
   <Switch>
@@ -11,6 +12,7 @@ const BaseRouter = () => (
     <PrivateRoute exact path="/" component={Home} />
     <PrivateRoute exact path="/coupon" component={Coupon} />
     <PrivateRoute exact path="/coupon/create" component={CouponForm} />
+    <PrivateRoute exact path="/coupon/:id" component={SingleCoupon} />
   </Switch>
 );
 
