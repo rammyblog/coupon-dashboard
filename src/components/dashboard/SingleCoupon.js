@@ -10,6 +10,7 @@ const SingleCoupon = ({ match }) => {
   const dispatch = useDispatch();
   const { singleCoupon, loading } = useSelector((state) => state.coupon);
   const code = match.params.code;
+  console.log(code)
   const [qrcode, setQrCode] = useState();
   const generateQR = async (text) => {
     try {

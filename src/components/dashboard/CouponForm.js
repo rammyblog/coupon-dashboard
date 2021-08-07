@@ -1,21 +1,52 @@
-import React from "react";
-import { Row, Col, InputNumber, DatePicker } from "antd";
-import { Link } from "react-router-dom";
-import { Form, Input, Button, Switch } from "antd";
-import { UserOutlined } from "@ant-design/icons";
-import DashboardHOC from "./DashboardHoc";
+import React, { useEffect } from 'react';
+import { Row, Col, InputNumber, DatePicker, notification } from 'antd';
+import { Link,useHistory } from 'react-router-dom';
+import { Form, Input, Button, Switch } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import DashboardHOC from './DashboardHoc';
+import { addCoupon } from '../../store/coupon/couponActionCreators';
+import { useDispatch, useSelector } from 'react-redux';
 
 function CouponForm() {
+  const { loading, error, errResponse } = useSelector((state) => state.coupon);
+  const dispatch = useDispatch();
+  const history = useHistory()
+  const onFinish =  (values) => {
+    
+    values.redeem_from = values.redeem_from._d;
+    values.redeem_to = values.redeem_to._d;
+    if (values.available === undefined) {
+      values.available = false;
+    }
+
+    dispatch(addCoupon(values))
+
+    if(!error || !loading){
+      notification['success']({
+        message: 'Success',
+        description: 'Coupon has been added successfully',
+      })
+      history.push(`${values.code}`)
+    }
+  };
+  useEffect(() => {
+    if (error) {
+      notification['error']({
+        message: 'Failed',
+        description: errResponse,
+      });
+    }
+  }, [error, errResponse]);
   return (
     <>
       <Form
         name="user_details_form"
         className="login-form"
         // initialValues={user}
-        // onFinish={onFinish}
-        layout="vertical"  
+        onFinish={onFinish}
+        layout="vertical"
         size="large"
-        style={{ clear: "both" }}
+        style={{ clear: 'both' }}
       >
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
           <Col span={12}>
@@ -63,7 +94,7 @@ function CouponForm() {
               rules={[
                 {
                   required: true,
-                  message: "Please enter a value between 1-100",
+                  message: 'Please enter a value between 1-100',
                 },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
@@ -72,7 +103,7 @@ function CouponForm() {
                     }
 
                     return Promise.reject(
-                      new Error("Enter a value between 1-100")
+                      new Error('Enter a value between 1-100')
                     );
                   },
                 }),
@@ -83,7 +114,7 @@ function CouponForm() {
           </Col>
           <Col span={12}>
             <Form.Item label="Available" name="available">
-              <Switch defaultChecked={true} />
+              <Switch defaultChecked={false} />
             </Form.Item>
           </Col>
         </Row>
@@ -104,10 +135,10 @@ function CouponForm() {
         <Form.Item>
           <Button
             type="primary"
-            // loading={loading}
+            loading={loading}
             htmlType="submit"
             className="mr-2"
-            // disabled={loading}
+            disabled={loading}
           >
             Save
           </Button>
@@ -120,4 +151,4 @@ function CouponForm() {
   );
 }
 
-export default DashboardHOC(CouponForm, "2");
+export default DashboardHOC(CouponForm, '2');

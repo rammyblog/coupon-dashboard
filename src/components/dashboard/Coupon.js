@@ -42,9 +42,9 @@ const Coupon = () => {
     },
   ];
 
-  function onChange(pagination, filters, sorter, extra) {
-    console.log('params', pagination, filters, sorter, extra);
-  }
+  // function onChange(pagination, filters, sorter, extra) {
+  //   console.log('params', pagination, filters, sorter, extra);
+  // }
 
   return (
     <div>

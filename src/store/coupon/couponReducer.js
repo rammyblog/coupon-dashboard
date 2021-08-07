@@ -23,6 +23,14 @@ export default function couponReducer(state = initialCouponState, action) {
         errResponse: null,
         coupons: action.payload,
       };
+    case types.CREATE_COUPON:
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        errResponse: null,
+        coupons: [...state.coupons, action.payload],
+      };
 
     case types.GET_SINGLE_COUPON:
       return {

@@ -21,6 +21,27 @@ export const fetchCoupons = () => {
   };
 };
 
+
+export const addCoupon = (data) => {
+  return async (dispatch) => {
+    dispatch({ type: types.LOAD_COUPONS_REQUEST });
+    try {
+      const response = await axios.post('coupons', data);
+      dispatch({
+        type: types.CREATE_COUPON,
+        payload: response.data.coupon,
+      });
+    } catch (error) {
+      const error_msg =
+        error.response && error.response.data.error_msg
+          ? error.response.data.error_msg
+          : error.message;
+      dispatch({ type: types.COUPONS_REQUEST_FAIL, payload: error_msg });
+    }
+  };
+};
+
+
 export const fetchSingleCoupons = (code) => {
   return async (dispatch) => {
     dispatch({ type: types.LOAD_COUPONS_REQUEST });
