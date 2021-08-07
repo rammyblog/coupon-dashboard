@@ -1,5 +1,6 @@
 import axios from '../../api/apiUtils';
 import * as types from './couponActionTypes';
+import store from '../../store';
 
 export const fetchCoupons = () => {
   return async (dispatch) => {
@@ -10,6 +11,39 @@ export const fetchCoupons = () => {
         type: types.GET_COUPONS,
         payload: response.data,
       });
+    } catch (error) {
+      const error_msg =
+        error.response && error.response.data.error_msg
+          ? error.response.data.error_msg
+          : error.message;
+      dispatch({ type: types.COUPONS_REQUEST_FAIL, payload: error_msg });
+    }
+  };
+};
+
+export const fetchSingleCoupons = (code) => {
+  return async (dispatch) => {
+    dispatch({ type: types.LOAD_COUPONS_REQUEST });
+    console.log(store.getState().coupon.coupons);
+    let singleCoupon;
+    try {
+      const coupons = store.getState().coupon.coupons;
+      if (coupons && coupons.length > 0) {
+        singleCoupon = coupons.find((c) => c.code === code);
+        if (singleCoupon) {
+          dispatch({
+            type: types.GET_SINGLE_COUPON,
+            payload: singleCoupon,
+          });
+        }
+      }else{
+          const response = await axios.get(`coupons/${code}`);
+          dispatch({
+            type: types.GET_SINGLE_COUPON,
+            payload: response.data,
+          });
+      }
+
     } catch (error) {
       const error_msg =
         error.response && error.response.data.error_msg

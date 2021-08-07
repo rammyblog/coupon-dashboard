@@ -12,7 +12,7 @@ const BaseRouter = () => (
     <PrivateRoute exact path="/" component={Home} />
     <PrivateRoute exact path="/coupon" component={Coupon} />
     <PrivateRoute exact path="/coupon/create" component={CouponForm} />
-    <PrivateRoute exact path="/coupon/:id" component={SingleCoupon} />
+    <PrivateRoute exact path="/coupon/:code" component={SingleCoupon} />
   </Switch>
 );
 

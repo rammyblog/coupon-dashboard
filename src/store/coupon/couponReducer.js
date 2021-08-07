@@ -5,6 +5,7 @@ const initialCouponState = {
   loading: false,
   error: null,
   errResponse: null,
+  singleCoupon: null,
 };
 
 export default function couponReducer(state = initialCouponState, action) {
@@ -23,14 +24,23 @@ export default function couponReducer(state = initialCouponState, action) {
         coupons: action.payload,
       };
 
-      case types.COUPONS_REQUEST_FAIL:
+    case types.GET_SINGLE_COUPON:
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        errResponse: null,
+        singleCoupon: action.payload,
+      };
+
+    case types.COUPONS_REQUEST_FAIL:
       return {
         ...state,
         loading: false,
         error: true,
         errResponse: action.payload,
-      
       };
+
     default:
       return state;
   }
