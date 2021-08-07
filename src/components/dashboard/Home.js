@@ -1,17 +1,18 @@
-import React, { useEffect, useState,useCallback } from "react";
-import DashboardHOC from "./DashboardHoc";
-import { Card, Col, Row, Typography } from "antd";
-import { Doughnut, Line } from "react-chartjs-2";
+import React, { useEffect, useState, useCallback } from 'react';
+import DashboardHOC from './DashboardHoc';
+import { Card, Col, Row, Typography } from 'antd';
+import { Doughnut, Line } from 'react-chartjs-2';
 const { Title } = Typography;
 
 const Home = () => {
+
   const [lineData, setLineData] = useState();
   const [doughnutStateData, setdoughnutStateData] = useState();
   const couponsByMonth = [
-    { month: "Jan", count: 1 },
-    { month: "FEB", count: 2 },
-    { month: "Mar", count: 34 },
-    { month: "Apr", count: 5 },
+    { month: 'Jan', count: 1 },
+    { month: 'FEB', count: 2 },
+    { month: 'Mar', count: 34 },
+    { month: 'Apr', count: 5 },
   ];
 
   const lineStatsData = {
@@ -19,21 +20,21 @@ const Home = () => {
     datasets: [
       {
         data: [],
-        label: "Coupon dataset",
+        label: 'Coupon dataset',
         fill: false,
         lineTension: 0.1,
-        backgroundColor: "rgba(75,192,192,0.4)",
-        borderColor: "rgba(75,192,192,1)",
-        borderCapStyle: "butt",
+        backgroundColor: 'rgba(75,192,192,0.4)',
+        borderColor: 'rgba(75,192,192,1)',
+        borderCapStyle: 'butt',
         borderDash: [],
         borderDashOffset: 0.0,
-        borderJoinStyle: "miter",
-        pointBorderColor: "rgba(75,192,192,1)",
-        pointBackgroundColor: "#fff",
+        borderJoinStyle: 'miter',
+        pointBorderColor: 'rgba(75,192,192,1)',
+        pointBackgroundColor: '#fff',
         pointBorderWidth: 1,
         pointHoverRadius: 5,
-        pointHoverBackgroundColor: "rgba(75,192,192,1)",
-        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+        pointHoverBorderColor: 'rgba(220,220,220,1)',
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
@@ -42,19 +43,18 @@ const Home = () => {
   };
 
   const DoughnutData = {
-    labels: ["Active", "Inactive"],
+    labels: ['Active', 'Inactive'],
     datasets: [
       {
         data: [],
-        backgroundColor: ["rgba(255, 99, 132, 0.5)", "rgba(54, 162, 235, 0.2)"],
-        borderColor: ["rgba(255,99,132,1)", "rgba(54, 162, 235, 1)"],
+        backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.2)'],
+        borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)'],
         borderWidth: 1,
       },
     ],
   };
 
-  
-  const getCouponData = useCallback(() =>  {
+  const getCouponData = useCallback(() => {
     // const activeUsers = users
     //   ? users.filter((user) => user.isActive === true).length
     //   : 0;
@@ -78,7 +78,7 @@ const Home = () => {
 
     return;
     // eslint-disable-next-line
-  },[])
+  }, []);
 
   const arrangeCouponStats = useCallback(() => {
     if (couponsByMonth) {
@@ -89,12 +89,18 @@ const Home = () => {
       }
       setLineData(lineStatsData);
     }
-// eslint-disable-next-line
-  }, [])
+    // eslint-disable-next-line
+  }, []);
 
   // useEffect(() => {
   //   setuserObj(getUsersData());
   // }, [users]);
+
+  // useEffect(() => {
+  //   if (coupons.length < 1) {
+  //     dispatch(fetchCoupons());
+  //   }
+  // }, [dispatch, coupons]);
 
   useEffect(() => {
     getCouponData();
@@ -103,16 +109,16 @@ const Home = () => {
 
   const CardObj = [
     {
-      title: "Total Coupons",
-      content: "8",
+      title: 'Total Coupons',
+      content: '8',
     },
     {
-      title: "Total Active Coupons",
-      content: "10",
+      title: 'Total Active Coupons',
+      content: '10',
     },
     {
-      title: "Total Inactive Coupons",
-      content: "8",
+      title: 'Total Inactive Coupons',
+      content: '8',
     },
   ];
   return (
@@ -161,8 +167,7 @@ const Home = () => {
         </div>
       </div>
     </div>
-    
   );
 };
 
-export default DashboardHOC(Home, "1");
+export default DashboardHOC(Home, '1');
