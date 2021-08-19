@@ -4,16 +4,25 @@ import { Link, useHistory } from 'react-router-dom';
 import { Form, Input, Button, Switch } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import DashboardHOC from './DashboardHoc';
-import { addCoupon } from '../../store/coupon/couponActionCreators';
+import moment from 'moment';
+import {
+  addCoupon,
+  fetchSingleCoupons,
+} from '../../store/coupon/couponActionCreators';
 import { useDispatch, useSelector } from 'react-redux';
 
-function CouponForm() {
-  const { loading, error, errResponse, message } = useSelector(
+function CouponForm({ match }) {
+  const { loading, error, errResponse, message, singleCoupon } = useSelector(
     (state) => state.coupon
   );
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const [form] = Form.useForm();
+  const updateCode = match.params.code;
   const [code, setCode] = useState('');
+  const [editedSingleCoupon, setEditedSingleCoupon] = useState({});
+
   const onFinish = (values) => {
     values.redeem_from = values.redeem_from._d;
     values.redeem_to = values.redeem_to._d;
@@ -24,7 +33,11 @@ function CouponForm() {
     dispatch(addCoupon(values));
   };
 
-  const onFinishFailed = ({ values, errorFields, outOfDate }) => {
+  useEffect(() => {
+    dispatch(fetchSingleCoupons(updateCode));
+  }, [dispatch, updateCode]);
+
+  const onFinishFailed = ({ errorFields }) => {
     notification['error']({
       message: errorFields[0].name[0],
       description: errorFields[0].errors[0],
@@ -52,14 +65,32 @@ function CouponForm() {
       history.push(`${code}`);
     }
   }, [message, code, error, loading, history]);
+
+  useEffect(() => {
+    if (singleCoupon) {
+      console.log({ singleCoupon });
+      setEditedSingleCoupon(singleCoupon);
+      console.log(editedSingleCoupon);
+      editedSingleCoupon.redeem_from = moment(
+        editedSingleCoupon.redeem_from
+      ).format('MMMM Do YYYY, h:mm:ss a');
+      editedSingleCoupon.redeem_to = moment(
+        editedSingleCoupon.redeem_to
+      ).format('MMMM Do YYYY, h:mm:ss a');
+      console.log(editedSingleCoupon);
+      // form.resetFields();
+    }
+    // eslint-disable-next-line
+  }, [form, singleCoupon]);
   return (
     <>
       <Form
         name="user_details_form"
         className="login-form"
-        // initialValues={user}
+        initialValues={updateCode && singleCoupon ? editedSingleCoupon : null}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
+        form={form}
         layout="vertical"
         size="large"
         style={{ clear: 'both' }}
@@ -150,7 +181,7 @@ function CouponForm() {
                 },
               ]}
             >
-              <DatePicker format="YYYY-MM-DD" />
+              <DatePicker format="YYYY-MM-DD" showTime />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -164,7 +195,7 @@ function CouponForm() {
                 },
               ]}
             >
-              <DatePicker required format="YYYY-MM-DD" />
+              <DatePicker required format="YYYY-MM-DD" showTime />
             </Form.Item>
           </Col>
         </Row>
