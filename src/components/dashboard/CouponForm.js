@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, InputNumber, DatePicker, notification } from 'antd';
-import { Link,useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Form, Input, Button, Switch } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import DashboardHOC from './DashboardHoc';
@@ -8,26 +8,27 @@ import { addCoupon } from '../../store/coupon/couponActionCreators';
 import { useDispatch, useSelector } from 'react-redux';
 
 function CouponForm() {
-  const { loading, error, errResponse } = useSelector((state) => state.coupon);
+  const { loading, error, errResponse, message } = useSelector(
+    (state) => state.coupon
+  );
   const dispatch = useDispatch();
-  const history = useHistory()
-  const onFinish =  (values) => {
-    
+  const history = useHistory();
+  const [code, setCode] = useState('');
+  const onFinish = (values) => {
     values.redeem_from = values.redeem_from._d;
     values.redeem_to = values.redeem_to._d;
     if (values.available === undefined) {
       values.available = false;
     }
+    setCode(values.code);
+    dispatch(addCoupon(values));
+  };
 
-    dispatch(addCoupon(values))
-
-    if(!error || !loading){
-      notification['success']({
-        message: 'Success',
-        description: 'Coupon has been added successfully',
-      })
-      history.push(`${values.code}`)
-    }
+  const onFinishFailed = ({ values, errorFields, outOfDate }) => {
+    notification['error']({
+      message: errorFields[0].name[0],
+      description: errorFields[0].errors[0],
+    });
   };
   useEffect(() => {
     if (error) {
@@ -37,6 +38,20 @@ function CouponForm() {
       });
     }
   }, [error, errResponse]);
+
+  useEffect(() => {
+    if (
+      !error &&
+      !loading &&
+      message === 'Coupon has been added successfully'
+    ) {
+      notification['success']({
+        message: 'Success',
+        description: 'Coupon has been added successfully',
+      });
+      history.push(`${code}`);
+    }
+  }, [message, code, error, loading, history]);
   return (
     <>
       <Form
@@ -44,6 +59,7 @@ function CouponForm() {
         className="login-form"
         // initialValues={user}
         onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
         layout="vertical"
         size="large"
         style={{ clear: 'both' }}
@@ -54,10 +70,11 @@ function CouponForm() {
               name="code"
               label="Coupon code"
               tooltip="If left empty, the server will generate a code for you"
+              required
               rules={[
                 {
-                  required: false,
-                  // message: 'Please input full name!'
+                  required: true,
+                  message: 'Enter coupon code',
                 },
               ]}
             >
@@ -75,6 +92,7 @@ function CouponForm() {
                 {
                   required: false,
                   // message: 'Please input full name!'
+                  min: 3,
                 },
               ]}
             >
@@ -121,13 +139,32 @@ function CouponForm() {
 
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
           <Col span={12}>
-            <Form.Item label="Redeemable From" name="redeem_from">
+            <Form.Item
+              label="Redeemable From"
+              name="redeem_from"
+              required
+              rules={[
+                {
+                  required: true,
+                  message: 'Please enter a date!',
+                },
+              ]}
+            >
               <DatePicker format="YYYY-MM-DD" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Redeemable To" name="redeem_to">
-              <DatePicker format="YYYY-MM-DD" />
+            <Form.Item
+              label="Redeemable To"
+              name="redeem_to"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please enter a date!',
+                },
+              ]}
+            >
+              <DatePicker required format="YYYY-MM-DD" />
             </Form.Item>
           </Col>
         </Row>

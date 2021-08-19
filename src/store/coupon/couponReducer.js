@@ -5,6 +5,7 @@ const initialCouponState = {
   loading: false,
   error: null,
   errResponse: null,
+  message: '',
   singleCoupon: null,
 };
 
@@ -14,6 +15,7 @@ export default function couponReducer(state = initialCouponState, action) {
       return {
         ...state,
         loading: true,
+        message: '',
       };
     case types.GET_COUPONS:
       return {
@@ -22,6 +24,7 @@ export default function couponReducer(state = initialCouponState, action) {
         error: false,
         errResponse: null,
         coupons: action.payload,
+        message: 'Coupon retrieved success',
       };
     case types.CREATE_COUPON:
       return {
@@ -30,6 +33,7 @@ export default function couponReducer(state = initialCouponState, action) {
         error: false,
         errResponse: null,
         coupons: [...state.coupons, action.payload],
+        message: 'Coupon has been added successfully',
       };
 
     case types.GET_SINGLE_COUPON:
@@ -39,6 +43,7 @@ export default function couponReducer(state = initialCouponState, action) {
         error: false,
         errResponse: null,
         singleCoupon: action.payload,
+        message: 'Coupon retrieved success',
       };
 
     case types.COUPONS_REQUEST_FAIL:
@@ -47,6 +52,7 @@ export default function couponReducer(state = initialCouponState, action) {
         loading: false,
         error: true,
         errResponse: action.payload,
+        message: '',
       };
 
     default:

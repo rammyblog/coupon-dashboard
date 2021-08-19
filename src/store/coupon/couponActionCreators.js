@@ -45,12 +45,13 @@ export const addCoupon = (data) => {
 export const fetchSingleCoupons = (code) => {
   return async (dispatch) => {
     dispatch({ type: types.LOAD_COUPONS_REQUEST });
-    console.log(store.getState().coupon.coupons);
     let singleCoupon;
     try {
       const coupons = store.getState().coupon.coupons;
+      // console.log(coupons)
       if (coupons && coupons.length > 0) {
         singleCoupon = coupons.find((c) => c.code === code);
+        // console.log({singleCoupon})
         if (singleCoupon) {
           dispatch({
             type: types.GET_SINGLE_COUPON,

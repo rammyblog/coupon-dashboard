@@ -20,6 +20,7 @@ const SingleCoupon = ({ match }) => {
     }
   };
   useEffect(() => {
+    console.log('dispatch')
     dispatch(fetchSingleCoupons(code));
   }, [dispatch, code]);
   useEffect(() => {
