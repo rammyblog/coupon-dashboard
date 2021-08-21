@@ -23,7 +23,7 @@ const Coupon = () => {
       sorter: (a, b) => a.name.length - b.name.length,
       sortDirections: ['descend'],
       render: (text, record) => (
-        <Link to={`/coupon/${record.code}`}>{text}</Link>
+        <Link to={`/coupon/${record._id}`}>{text}</Link>
       ),
     },
     {

@@ -9,7 +9,7 @@ const { Title, Text } = Typography;
 const SingleCoupon = ({ match }) => {
   const dispatch = useDispatch();
   const { singleCoupon, loading } = useSelector((state) => state.coupon);
-  const code = match.params.code;
+  const id = match.params.id;
   const [qrcode, setQrCode] = useState();
   const generateQR = async (text) => {
     try {
@@ -19,11 +19,13 @@ const SingleCoupon = ({ match }) => {
     }
   };
   useEffect(() => {
-    dispatch(fetchSingleCoupons(code));
-  }, [dispatch, code]);
+    dispatch(fetchSingleCoupons(id));
+  }, [dispatch, id]);
   useEffect(() => {
-    generateQR(code);
-  }, [code]);
+    if(singleCoupon && singleCoupon.code) { 
+      generateQR(singleCoupon.code);
+    }
+  }, [singleCoupon]);
   if (loading) {
     return <p>Loading</p>;
   }

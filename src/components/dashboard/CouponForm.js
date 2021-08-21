@@ -20,7 +20,7 @@ function CouponForm({ match }) {
   const history = useHistory();
 
   const [form] = Form.useForm();
-  const updateCode = match.params.code;
+  const updateID = match.params.id;
   const [code, setCode] = useState('');
   const [editedSingleCoupon, setEditedSingleCoupon] = useState({});
 
@@ -31,16 +31,17 @@ function CouponForm({ match }) {
       values.available = false;
     }
     setCode(values.code);
-    if (!updateCode) {
+    if (!updateID) {
       dispatch(addCoupon(values));
     }else{
-      dispatch(editCoupon(values));
+      // values._id= updateID
+      dispatch(editCoupon(values, updateID));
     }
   };
 
   useEffect(() => {
-    dispatch(fetchSingleCoupons(updateCode));
-  }, [dispatch, updateCode]);
+    dispatch(fetchSingleCoupons(updateID));
+  }, [dispatch, updateID]);
 
   const onFinishFailed = ({ errorFields }) => {
     notification['error']({
@@ -61,7 +62,7 @@ function CouponForm({ match }) {
     if (
       !error &&
       !loading &&
-      message === 'Coupon has been added successfully'
+      message === 'Coupon has been added successfully' || 'Coupon has been added successfully'
     ) {
       notification['success']({
         message: 'Success',
@@ -94,7 +95,7 @@ function CouponForm({ match }) {
       <Form
         name="user_details_form"
         className="login-form"
-        initialValues={updateCode && singleCoupon ? editedSingleCoupon : null}
+        initialValues={updateID && singleCoupon ? editedSingleCoupon : null}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         form={form}
