@@ -27,6 +27,7 @@ export const addCoupon = (data) => {
     dispatch({ type: types.LOAD_COUPONS_REQUEST });
     try {
       const response = await axios.post('coupons', data);
+  
       dispatch({
         type: types.CREATE_COUPON,
         payload: response.data.coupon,
@@ -44,8 +45,7 @@ export const addCoupon = (data) => {
 
 export const editCoupon = (data, id) => {
   return async (dispatch) => {
-    dispatch({ type: types.LOAD_COUPONS_REQUEST });
-    console.log(data);  
+    dispatch({ type: types.LOAD_COUPONS_REQUEST }); 
     try {
       const response = await axios.put(`coupons/${id}`, data);
       dispatch({
@@ -72,7 +72,7 @@ export const fetchSingleCoupons = (id) => {
       // console.log(coupons)
       if (coupons && coupons.length > 0) {
         singleCoupon = coupons.find((c) => c._id === id);
-        // console.log({singleCoupon})
+        // console.log({singleCoupon}, 'here')
         if (singleCoupon) {
           dispatch({
             type: types.GET_SINGLE_COUPON,

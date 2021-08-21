@@ -19,8 +19,8 @@ const Coupon = () => {
       dataIndex: 'code',
       // specify the condition of filtering result
       // here is that finding the name started with `value`
-      onFilter: (value, record) => record.name.indexOf(value) === 0,
-      sorter: (a, b) => a.name.length - b.name.length,
+      onFilter: (value, record) => record.code.indexOf(value) === 0,
+      sorter: (a, b) => a.code.length - b.code.length,
       sortDirections: ['descend'],
       render: (text, record) => (
         <Link to={`/coupon/${record._id}`}>{text}</Link>

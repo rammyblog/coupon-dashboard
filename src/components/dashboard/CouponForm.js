@@ -13,7 +13,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 function CouponForm({ match }) {
-  const { loading, error, errResponse, message, singleCoupon } = useSelector(
+  const { loading, error, errResponse, message, singleCoupon, coupons } = useSelector(
     (state) => state.coupon
   );
   const dispatch = useDispatch();
@@ -21,7 +21,6 @@ function CouponForm({ match }) {
 
   const [form] = Form.useForm();
   const updateID = match.params.id;
-  const [code, setCode] = useState('');
   const [editedSingleCoupon, setEditedSingleCoupon] = useState({});
 
   const onFinish = (values) => {
@@ -30,17 +29,18 @@ function CouponForm({ match }) {
     if (values.available === undefined) {
       values.available = false;
     }
-    setCode(values.code);
     if (!updateID) {
+      console.log(values)
       dispatch(addCoupon(values));
     }else{
-      // values._id= updateID
       dispatch(editCoupon(values, updateID));
     }
   };
 
   useEffect(() => {
-    dispatch(fetchSingleCoupons(updateID));
+    if(updateID){
+      dispatch(fetchSingleCoupons(updateID));
+    }
   }, [dispatch, updateID]);
 
   const onFinishFailed = ({ errorFields }) => {
@@ -62,18 +62,19 @@ function CouponForm({ match }) {
     if (
       !error &&
       !loading &&
-      message === 'Coupon has been added successfully' || 'Coupon has been added successfully'
+      message === 'Coupon has been added successfully' 
     ) {
       notification['success']({
         message: 'Success',
         description: 'Coupon has been added successfully',
       });
-      history.push(`${code}`);
+      const id = coupons[coupons.length - 1]._id
+      history.push(`${id}`);
     }
-  }, [message, code, error, loading, history]);
+  }, [message, coupons, error, loading, history]);
 
   useEffect(() => {
-    if (singleCoupon && Object.keys(singleCoupon).length > 0) {
+    if (singleCoupon && Object.keys(singleCoupon).length > 0 && updateID) {
       setEditedSingleCoupon(singleCoupon);
       editedSingleCoupon.redeem_from = moment(
         singleCoupon.redeem_from
@@ -86,7 +87,7 @@ function CouponForm({ match }) {
         form.resetFields();
       }
     }
-  }, [form, singleCoupon, editedSingleCoupon]);
+  }, [form, singleCoupon, editedSingleCoupon,updateID]);
   if(loading){
     return<p>loading</p>
   }

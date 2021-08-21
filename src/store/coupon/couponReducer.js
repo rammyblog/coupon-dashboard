@@ -37,7 +37,7 @@ export default function couponReducer(state = initialCouponState, action) {
       };
 
       case types.UPDATE_COUPON:
-        const tempState = state.coupons.slice().filter((data) => data._id !== action.payload._id)
+        const tempState = [...state.coupons].filter((data) => data._id !== action.payload._id)
         return {
           ...state,
           loading: false,

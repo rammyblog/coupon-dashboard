@@ -4,6 +4,7 @@ import DashboardHOC from './DashboardHoc';
 import { Typography, Image, Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchSingleCoupons } from '../../store/coupon/couponActionCreators';
+import { Link } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 const SingleCoupon = ({ match }) => {
@@ -33,7 +34,7 @@ const SingleCoupon = ({ match }) => {
     <>
       {singleCoupon && (
         <>
-          <Button className="float-right">Edit Coupon</Button>
+          <Button className="float-right"><Link to={`/coupon/update/${singleCoupon._id}`}> Edit Coupon</Link></Button>
           <div className="clear-both">
             <Title level={5}>Coupon Code</Title>
             <Text>{singleCoupon.code}</Text>
@@ -42,7 +43,7 @@ const SingleCoupon = ({ match }) => {
             <Title level={5}>Description</Title>
             <Text>{singleCoupon.description}</Text>
             <Title level={5}>Available</Title>
-            <Text>{singleCoupon.description}</Text>
+            <Text>{singleCoupon.available}</Text>
             <Title level={5}>Redeemable from</Title>
             <Text>{singleCoupon.redeem_from}</Text>
             <Title level={5}>Redeemable To</Title>
