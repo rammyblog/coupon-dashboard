@@ -14,7 +14,8 @@ function DashboardHOC(Component, index) {
       if (coupons.length < 1) {
         dispatch(fetchCoupons());
       }
-    }, [dispatch, coupons]);
+      // eslint-disable-next-line
+    }, []);
     const handleSetCollapsed = () => {
       setCollapsed(!collapsed);
     };

@@ -62,14 +62,15 @@ function CouponForm({ match }) {
     if (
       !error &&
       !loading &&
-      message === 'Coupon has been added successfully' 
+      (message === 'Coupon has been added successfully' ||  message === 'Coupon has been edited')
     ) {
       notification['success']({
         message: 'Success',
-        description: 'Coupon has been added successfully',
+        description: '',
       });
+      console.log('here')
       const id = coupons[coupons.length - 1]._id
-      history.push(`${id}`);
+      history.push(`/coupon/${id}`);
     }
   }, [message, coupons, error, loading, history]);
 

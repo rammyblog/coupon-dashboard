@@ -15,7 +15,9 @@ export default function couponReducer(state = initialCouponState, action) {
       return {
         ...state,
         loading: true,
-        message: '',
+        message: null,
+        error:false,
+        errResponse:null,
       };
     case types.GET_COUPONS:
       return {
