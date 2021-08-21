@@ -8,6 +8,7 @@ import moment from 'moment';
 import {
   addCoupon,
   fetchSingleCoupons,
+  editCoupon
 } from '../../store/coupon/couponActionCreators';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -30,7 +31,11 @@ function CouponForm({ match }) {
       values.available = false;
     }
     setCode(values.code);
-    dispatch(addCoupon(values));
+    if (!updateCode) {
+      dispatch(addCoupon(values));
+    }else{
+      dispatch(editCoupon(values));
+    }
   };
 
   useEffect(() => {
@@ -67,21 +72,23 @@ function CouponForm({ match }) {
   }, [message, code, error, loading, history]);
 
   useEffect(() => {
-    if (singleCoupon) {
-      console.log({ singleCoupon });
+    if (singleCoupon && Object.keys(singleCoupon).length > 0) {
       setEditedSingleCoupon(singleCoupon);
-      console.log(editedSingleCoupon);
       editedSingleCoupon.redeem_from = moment(
-        editedSingleCoupon.redeem_from
-      ).format('MMMM Do YYYY, h:mm:ss a');
+        singleCoupon.redeem_from
+      )
       editedSingleCoupon.redeem_to = moment(
-        editedSingleCoupon.redeem_to
-      ).format('MMMM Do YYYY, h:mm:ss a');
-      console.log(editedSingleCoupon);
-      // form.resetFields();
+        singleCoupon.redeem_to
+      )
+      if(editedSingleCoupon &&  Object.keys(editedSingleCoupon).length > 0){
+
+        form.resetFields();
+      }
     }
-    // eslint-disable-next-line
-  }, [form, singleCoupon]);
+  }, [form, singleCoupon, editedSingleCoupon]);
+  if(loading){
+    return<p>loading</p>
+  }
   return (
     <>
       <Form
@@ -181,7 +188,7 @@ function CouponForm({ match }) {
                 },
               ]}
             >
-              <DatePicker format="YYYY-MM-DD" showTime />
+              <DatePicker format="YYYY-MM-DD"  />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -195,7 +202,7 @@ function CouponForm({ match }) {
                 },
               ]}
             >
-              <DatePicker required format="YYYY-MM-DD" showTime />
+              <DatePicker required format="YYYY-MM-DD" />
             </Form.Item>
           </Col>
         </Row>

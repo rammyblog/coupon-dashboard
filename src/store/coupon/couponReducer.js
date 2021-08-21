@@ -36,6 +36,17 @@ export default function couponReducer(state = initialCouponState, action) {
         message: 'Coupon has been added successfully',
       };
 
+      case types.UPDATE_COUPON:
+        const tempState = state.coupons.slice().filter((data) => data._id !== action.payload._id)
+        return {
+          ...state,
+          loading: false,
+          error: false,
+          errResponse: null,
+          coupons: [...tempState, action.payload],
+          message: 'Coupon has been edited'
+        };
+
     case types.GET_SINGLE_COUPON:
       return {
         ...state,
