@@ -30,7 +30,6 @@ function CouponForm({ match }) {
       values.available = false;
     }
     if (!updateID) {
-      console.log(values)
       dispatch(addCoupon(values));
     }else{
       dispatch(editCoupon(values, updateID));
@@ -68,7 +67,6 @@ function CouponForm({ match }) {
         message: 'Success',
         description: '',
       });
-      console.log('here')
       const id = coupons[coupons.length - 1]._id
       history.push(`/coupon/${id}`);
     }
@@ -89,6 +87,8 @@ function CouponForm({ match }) {
       }
     }
   }, [form, singleCoupon, editedSingleCoupon,updateID]);
+  
+  
   if(loading){
     return<p>loading</p>
   }
