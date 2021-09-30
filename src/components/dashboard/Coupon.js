@@ -4,15 +4,10 @@ import { Table, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-// available(pin): true
-// _id(pin): "60f9c316e956581828623f48"
-// code(pin): "CODE123"
-// percent_off(pin): 30
-// redeem_from(pin): "2021-07-23T00:00:00.000Z"
-// redeem_to(pin): "2021-07-24T00:00:00.000Z"
-// __v(pin): 0
+
 const Coupon = () => {
   const { coupons } = useSelector((state) => state.coupon);
+  
   const columns = [
     {
       title: 'CODE',

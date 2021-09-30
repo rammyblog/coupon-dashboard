@@ -40,13 +40,15 @@ export default function couponReducer(state = initialCouponState, action) {
 
       case types.UPDATE_COUPON:
         const tempState = [...state.coupons].filter((data) => data._id !== action.payload._id)
+      
         return {
           ...state,
           loading: false,
           error: false,
           errResponse: null,
           coupons: [...tempState, action.payload],
-          message: 'Coupon has been edited'
+          message: 'Coupon has been edited',
+          singleCoupon: action.payload
         };
 
     case types.GET_SINGLE_COUPON:

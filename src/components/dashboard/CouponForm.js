@@ -26,6 +26,7 @@ function CouponForm({ match }) {
   const onFinish = (values) => {
     values.redeem_from = values.redeem_from._d;
     values.redeem_to = values.redeem_to._d;
+    console.log(values)
     if (values.available === undefined) {
       values.available = false;
     }
